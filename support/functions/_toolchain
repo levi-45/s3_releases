@@ -96,7 +96,8 @@ _toolchain_main_menu(){
 		do
 			if [ ! "$i" == "native" ]
 			then
-				unset _self_build
+				#resetting optional config variables
+				unset _stagingdir _androidndkdir _self_build extra_use extra_cc extra_ld extra_c stapi_allowed stapi_lib_custom 
 				source "$tccfgdir/$i"
 				if [ "$systype" == "ok" ]
 				then
