@@ -11,13 +11,12 @@ update_me(){
 
 	local_revision=$(gitrevision $s3local)
 	online_revision=$(gitrevision $s3url)
-	
+
 	if [ ! "$local_revision" == "$online_revision" ]
 	then
 		printf "  update s3_git\n   from Local Revision: $local_revision\n   to  Remote Revision: $online_revision\n"
 		rm -rf "$s3local"; git clone "$s3url" "$s3local" &>/dev/null; cd "$s3local"
 		printf "  updating all files ...\n\n"
-		rm -f ./support/patches/no.patch 2>/dev/null
 		yes | cp -rf ./s3 "$workdir/s3"
 		yes | cp -rf ./support/* "$workdir/support"
 	else
