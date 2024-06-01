@@ -32,7 +32,7 @@ _gui_build(){
 	libcount=0;
 	statcount=0;
 
-#fix streamrelay case 
+#fix streamrelay case
 	check_streamrelay
 
 #do use_vars
@@ -68,7 +68,7 @@ _gui_build(){
 	then
 		((libcount++))
 	fi
-	
+
 	if [ "${USE_vars[USE_SSL]}" == "USE_SSL=1" ]
 	then
 		((libcount++))
@@ -89,7 +89,7 @@ _gui_build(){
 	else
 		_pcsc=
 	fi
-	
+
 	if [ "${USE_vars[USE_LIBDVBCSA]}" == "USE_LIBDVBCSA=1" ]
 	then
 		((libcount++))
@@ -108,6 +108,8 @@ _gui_build(){
 	if [ ! "${USE_vars[USE_EXTRA]}" == "USE_EXTRA=1" ]
 	then
 		unset extra_use extra_cc extra_ld extra_c
+	else
+		extra="-extra"
 	fi
 
 #dynamic, static, mixed build
@@ -134,7 +136,7 @@ _gui_build(){
 
 #todo add switch for verbose
 	_generate_oscam_name "$_toolchainname"
-	oscam_name="$oscam_name$buildtype"
+	oscam_name="$oscam_name$extra$buildtype"
 	targztmp="$(mktemp)"
 
 	if [ ! "${USE_vars[USE_TARGZ]}" == "USE_TARGZ=1" ]
@@ -185,7 +187,7 @@ _gui_build(){
 	then
 		rm "$bdir/$oscam_name.debug"
 		printf "\n $txt_delete $oscam_name.debug\n"|tee -a "$ldir/$log_name"
-	fi;) | "$gui" "$st_" --colors --title " -[ Build ]- " "$pb_" "$_lines" "$_cols"
+	fi;) | "$gui" "$st_" --colors --title " -[ Build$(TTAG) ]- " "$pb_" "$_lines" "$_cols"
 	sleep 2
 
 #COMPRESS

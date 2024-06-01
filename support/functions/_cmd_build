@@ -6,7 +6,7 @@ _cmd_build(){
 	if [ "$_toolchainname" == "native" ]
 	then
 		log_name="$(date +%F).$(date +%X).$(hostname).log"
-		
+
 	else
 		log_name="$(date +%F).$(date +%X).$_toolchainname.log"
 	fi
@@ -91,7 +91,7 @@ _cmd_build(){
 		check_smargo
 	fi
 
-#fix streamrelay case 
+#fix streamrelay case
 	check_streamrelay
 
 #fill use variables and set name addons
@@ -192,6 +192,7 @@ printf "$y_l\n |       set : ${cdtag}$w_l"
 	if [ "${USE_vars[USE_EXTRA]}" == "USE_EXTRA=1" ]
 	then
 		printf "$y_l\n | EXTRAFLAGS: enabled"
+		extra="-extra"
 	else
 		printf "$y_l\n | EXTRAFLAGS: disabled"
 		unset extra_use extra_cc extra_ld extra_c
@@ -238,7 +239,7 @@ then
 else
 	_generate_oscam_name "$_toolchainname"
 fi
-	oscam_name="$oscam_name$buildtype"
+	oscam_name="$oscam_name$extra$buildtype"
 	_nl
 	USESTRING=${USE_vars[@]}
 	EXTRA_USE=$extra_use
@@ -321,7 +322,7 @@ fi
 
 #build error message
 	error_on_build=$(grep -c1 error "$ldir/$log_name")
-	[ "$error_on_build" -gt "0" ] && printf "$r_l\terrors on build found$w_l"
+	[ "$error_on_build" -gt "0" ] && printf "$r_l\terrors on build found\n$w_l"
 	printf "$re_$w_l"
 	exit
 }
